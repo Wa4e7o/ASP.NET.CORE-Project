@@ -19,7 +19,7 @@ namespace FishingBlog
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options
+            services.AddDbContext<FishingBlogDbContext>(options => options
                         .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
@@ -34,7 +34,7 @@ namespace FishingBlog
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<FishingBlogDbContext>();
 
 
             services

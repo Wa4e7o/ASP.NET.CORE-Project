@@ -5,12 +5,16 @@
 
     using static Data.DataConstants;
 
-    public class Shop
+    public class Topic
     {
         [Required]
         [MaxLength(IdMaxLength)]
         public int Id { get; set; }
 
-        public IEnumerable<Product> Products = new List<Product>();
+        [Required]
+        [MaxLength(TitleMaxLength)]
+        public string Title { get; set; }
+
+        public IEnumerable<Publication> Publications { get; set; } = new List<Publication>();
     }
 }

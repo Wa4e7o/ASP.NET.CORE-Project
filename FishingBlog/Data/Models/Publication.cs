@@ -1,6 +1,7 @@
 ﻿namespace FishingBlog.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using static Data.DataConstants;
 
@@ -23,6 +24,12 @@
 
         [Required]
         public DateTime PublishedOn { get; set; } = DateTime.UtcNow;
+
+        public int TopicId { get; set; }
+
+        public Topic Topic { get; set; }
+
+        public IEnumerable<Comment> Comments { get; set; } = new List<Comment>();
 
     }
 }

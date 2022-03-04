@@ -12,5 +12,6 @@
         public int Id { get; set; }
 
         public IEnumerable<Product> Products = new List<Product>();
+
     }
 }

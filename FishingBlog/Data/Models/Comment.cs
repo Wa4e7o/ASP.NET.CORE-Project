@@ -22,5 +22,10 @@
 
         [Required]
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
+        public int PublicationId { get; set; }
+
+        public Publication Publication { get; init; }
+
     }
 }

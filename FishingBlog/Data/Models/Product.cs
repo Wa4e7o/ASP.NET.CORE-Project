@@ -25,5 +25,9 @@
 
         [Required]
         public double Price { get; set; }
+
+        public int CartId { get; set; }
+
+        public Cart Cart { get; init; }
     }
 }

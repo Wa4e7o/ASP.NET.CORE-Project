@@ -66,6 +66,8 @@ namespace FishingBlog
                    endpoints.MapDefaultControllerRoute();
                    endpoints.MapRazorPages();
                });
+
+            app.ApplicationServices.GetService<FishingBlogDbContext>().Database.Migrate();
         }
     }
 }

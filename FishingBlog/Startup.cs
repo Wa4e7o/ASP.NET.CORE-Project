@@ -2,6 +2,7 @@
 namespace FishingBlog
 {
     using FishingBlog.Data;
+    using FishingBlog.Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,8 @@ namespace FishingBlog
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,7 +70,6 @@ namespace FishingBlog
                    endpoints.MapRazorPages();
                });
 
-            app.ApplicationServices.GetService<FishingBlogDbContext>().Database.Migrate();
         }
     }
 }

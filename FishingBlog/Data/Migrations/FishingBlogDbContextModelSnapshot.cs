@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishingBlog.Data.Migrations
 {
     [DbContext(typeof(FishingBlogDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class FishingBlogDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -45,9 +45,8 @@ namespace FishingBlog.Data.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedOn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NickName")
                         .IsRequired()

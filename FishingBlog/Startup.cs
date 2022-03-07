@@ -1,4 +1,3 @@
-
 namespace FishingBlog
 {
     using FishingBlog.Data;

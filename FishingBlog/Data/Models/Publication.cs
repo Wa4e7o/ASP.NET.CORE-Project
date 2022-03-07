@@ -23,7 +23,7 @@
         public string ImageUrl { get; set; }
 
         [Required]
-        public DateTime PublishedOn { get; set; } = DateTime.UtcNow;
+        public string PublishedOn { get; set; }
 
         public int TopicId { get; set; }
 

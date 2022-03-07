@@ -1,12 +1,9 @@
-﻿using FishingBlog.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FishingBlog.Data
+﻿namespace FishingBlog.Data
 {
+    using FishingBlog.Data.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+
     public class FishingBlogDbContext : IdentityDbContext
     {
 

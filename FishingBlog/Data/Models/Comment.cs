@@ -21,7 +21,7 @@
         public string CommentText { get; set; }
 
         [Required]
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+        public string CreatedOn { get; set; } 
 
         public int PublicationId { get; set; }
 

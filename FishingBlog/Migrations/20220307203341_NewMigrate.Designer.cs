@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FishingBlog.Data.Migrations
+namespace FishingBlog.Migrations
 {
     [DbContext(typeof(FishingBlogDbContext))]
-    [Migration("20220304165422_ModelTables")]
-    partial class ModelTables
+    [Migration("20220307203341_NewMigrate")]
+    partial class NewMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,8 +47,9 @@ namespace FishingBlog.Data.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedOn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NickName")
                         .IsRequired()
@@ -118,8 +119,9 @@ namespace FishingBlog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PublishedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("PublishedOn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()

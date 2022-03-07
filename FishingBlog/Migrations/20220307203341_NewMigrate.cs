@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FishingBlog.Data.Migrations
+namespace FishingBlog.Migrations
 {
-    public partial class ChangePublicationClass : Migration
+    public partial class NewMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,7 +231,7 @@ namespace FishingBlog.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NickName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CommentText = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedOn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PublicationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

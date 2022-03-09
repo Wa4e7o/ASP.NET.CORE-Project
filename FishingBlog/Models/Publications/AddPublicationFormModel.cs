@@ -1,5 +1,6 @@
 ﻿namespace FishingBlog.Models.Publications
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -21,11 +22,11 @@
         public string ImageUrl { get; init; }
 
         [Display(Name = "Post Date:")]
-        public string PublishedOn { get; init; }
+        public DateTime PublishedOn { get; init; }
 
         [Display(Name = "Sections")]
         public int TopicId { get; init; }
 
-        public IEnumerable<TopicCategoryViewModel> Sections { get; set; }
+        public IEnumerable<PublicationCategoryViewModel> Sections { get; set; }
     }
 }

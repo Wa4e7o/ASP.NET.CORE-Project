@@ -1,6 +1,6 @@
 ﻿namespace FishingBlog.Models.Publications
 {
-    public class TopicCategoryViewModel
+    public class PublicationCategoryViewModel
     {
         public int Id { get; init; }
 

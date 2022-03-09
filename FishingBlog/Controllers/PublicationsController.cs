@@ -17,8 +17,27 @@
 
         public IActionResult Add() => View(new AddPublicationFormModel
         {
-            Sections = this.GetTopicCategories()
+            Sections = this.GetTopicCategories
         });
+
+        public IActionResult All()
+        {
+            var publications = this.data
+                 .Publications
+                 .OrderByDescending(p => p.Id)
+                 .Select(p => new PublicationListingViewModel
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     Description = p.Description,
+                     ImageUrl = p.ImageUrl,
+                     Sections = p.Topic.Title
+                 })
+                 .ToList();
+
+            return View(publications);
+        }
+
 
         [HttpPost]
         public IActionResult Add(AddPublicationFormModel publication)
@@ -30,7 +49,7 @@
 
             if (!ModelState.IsValid)
             {
-                publication.Sections = this.GetTopicCategories();
+                publication.Sections = this.GetTopicCategories;
 
                 return View(publication);
             }
@@ -44,13 +63,17 @@
                 TopicId = publication.TopicId
             };
 
-            return RedirectToAction("Index", "Home");
+            this.data.Publications.Add(publicationData);
+
+            this.data.SaveChanges();
+
+            return RedirectToAction(nameof(All));
         }
 
-        private IEnumerable<TopicCategoryViewModel> GetTopicCategories()
+        private IEnumerable<PublicationCategoryViewModel> GetTopicCategories
            => this.data
             .Topics
-            .Select(t => new TopicCategoryViewModel
+            .Select(t => new PublicationCategoryViewModel
             {
                 Id = t.Id,
                 Title = t.Title

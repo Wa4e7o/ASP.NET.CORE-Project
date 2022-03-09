@@ -38,8 +38,6 @@
               new Topic{ Title = "Fishing Advice" },
               new Topic{ Title = "Fishing spots" },
               new Topic{ Title = "Fishing stories" },
-              new Topic{ Title = "How to catch"},
-              new Topic{ Title ="Shop"}
             });
 
             data.SaveChanges();

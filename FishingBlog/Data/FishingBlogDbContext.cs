@@ -23,6 +23,8 @@
 
         public DbSet<Product> Products { get; init; }
 
+        public DbSet<News> Newses { get; init; } 
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

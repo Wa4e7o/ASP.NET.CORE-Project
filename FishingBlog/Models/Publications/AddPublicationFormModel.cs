@@ -8,6 +8,7 @@
 
     public class AddPublicationFormModel
     {
+
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = "Title must be between 5 and 200 characters long.")]
         public string Title { get; init; }
@@ -28,5 +29,6 @@
         public int TopicId { get; init; }
 
         public IEnumerable<PublicationCategoryViewModel> Sections { get; set; }
+
     }
 }

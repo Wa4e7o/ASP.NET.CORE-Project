@@ -1,10 +1,8 @@
 ﻿namespace FishingBlog.Controllers
 {
     using FishingBlog.Data;
-    using FishingBlog.Data.Models;
-    using FishingBlog.Models.Publications;
+    using FishingBlog.Models.News;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
     using System.Linq;
 
     public class NewsController : Controller
@@ -17,13 +15,13 @@
             this.data = data;
         }
 
-        public IActionResult All()
+        public IActionResult AllNewsPage()
         {
-            var publications = this.data
+            var newsPublication = this.data
                  .Publications
                  .OrderByDescending(p => p.Id)
                  .Where(p => p.TopicId == 1)
-                 .Select(p => new PublicationListingViewModel
+                 .Select(p => new NewsListingViewModel
                  {
                      Id = p.Id,
                      Title = p.Title,
@@ -34,7 +32,7 @@
                  .ToList();
             
 
-            return View(publications);
+            return View(newsPublication);
         }
 
     }

@@ -1,9 +1,7 @@
-﻿
-
-namespace FishingBlog.Controllers
+﻿namespace FishingBlog.Controllers
 {
     using FishingBlog.Data;
-    using FishingBlog.Models.Publications;
+    using FishingBlog.Models.FishingStories;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
 
@@ -16,13 +14,13 @@ namespace FishingBlog.Controllers
             this.data = data;
         }
 
-        public IActionResult All()
+        public IActionResult AllStories()
         {
             var publications = this.data
                  .Publications
                  .OrderByDescending(p => p.Id)
                  .Where(p => p.TopicId == 4)
-                 .Select(p => new PublicationListingViewModel
+                 .Select(p => new FishingStoriesListingViewModel
                  {
                      Id = p.Id,
                      Title = p.Title,

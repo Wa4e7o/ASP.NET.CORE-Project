@@ -38,7 +38,6 @@
             return View(publications);
         }
 
-
         [HttpPost]
         public IActionResult Add(AddPublicationFormModel publication)
         {

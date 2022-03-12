@@ -1,18 +1,32 @@
-﻿@model IEnumerable<PublicationListingViewModel>
+﻿@model AllPublicationsQueryModel
 
-<div class="row">
-    @foreach (var publication in Model)
-    {
-    <div class="col-md-4">
-        <div class="card">
-            <img class="card-img-top" src="@publication.ImageUrl" alt="@publication.Title">
-            <div class="card-body text-center">
-                <h5 class="card-title text-center">@publication.Title  </h5>
-                <h6 class="card-title text-danger text-center">@(publication.Sections)</h6>
-                <p class="card-text text-center">Post something</p>
-                <a asp-controller="Publications" asp-action="Details" asp-route-id="@publication.Id" class="btn btn-primary">View More</a>
-            </div>
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Some cool title...">
+        </div>
+
+        <div class="form-group col-md-3">
         </div>
     </div>
+    <input type="submit" class="btn btn-primary d-none">
+</form>
+
+<div class="row text-center">
+    @foreach (var publication in Model.Publications)
+    {
+        <div class="col-md-4 text-center">
+            <div class="card mb-3">
+                <img class="card-img-top text-center" src="@publication.ImageUrl" alt="@publication.Title">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@publication.Title  </h5>
+                    <h6 class="card-title text-danger text-center">@(publication.Sections)</h6>
+                    <p class="card-text text-center">Post something</p>
+                    <a asp-controller="Publications" asp-action="Details" asp-route-id="@publication.Id" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+
+        </div>
     }
 </div>

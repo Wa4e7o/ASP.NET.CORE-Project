@@ -4,6 +4,7 @@
     using FishingBlog.Data.Models;
     using FishingBlog.Models.Publications;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -20,11 +21,99 @@
             Sections = this.GetTopicCategories
         });
 
-        public IActionResult All()
+        public IActionResult All(string searchTerm)
+        {
+
+            var publicationsQuery = this.data.Publications.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                publicationsQuery = publicationsQuery.Where(p =>
+                p.Title.ToLower().Contains(searchTerm.ToLower()) ||
+                p.Description.ToLower().Contains(searchTerm.ToLower()));
+            }
+            var publications = publicationsQuery
+                 .OrderByDescending(p => p.Id)
+                 .Select(p => new PublicationListingViewModel
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     Description = p.Description,
+                     ImageUrl = p.ImageUrl,
+                     Sections = p.Topic.Title
+                 })
+                 .ToList();
+            return View(new AllPublicationsQueryModel
+            {
+                Publications = publications,
+                SearchTerm = searchTerm
+            });
+        }
+
+        public IActionResult AllNewsPage()
         {
             var publications = this.data
-                 .Publications
-                 .OrderByDescending(p => p.Id)
+                .Publications
+                .OrderByDescending(p => p.Id)
+                 .Where(p => p.TopicId == 1)
+                 .Select(p => new PublicationListingViewModel
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     Description = p.Description,
+                     ImageUrl = p.ImageUrl,
+                     Sections = p.Topic.Title
+                 })
+                 .ToList();
+
+            return View(publications);
+
+        }
+
+        public IActionResult AllAdvices()
+        {
+            var publications = this.data
+                   .Publications
+                   .OrderByDescending(p => p.Id)
+                    .Where(p => p.TopicId == 2)
+                    .Select(p => new PublicationListingViewModel
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        Description = p.Description,
+                        ImageUrl = p.ImageUrl,
+                        Sections = p.Topic.Title
+                    })
+                    .ToList();
+
+            return View(publications);
+        }
+
+        public IActionResult AllStories()
+        {
+            var publications = this.data
+                    .Publications
+                    .OrderByDescending(p => p.Id)
+                     .Where(p => p.TopicId == 4)
+                     .Select(p => new PublicationListingViewModel
+                     {
+                         Id = p.Id,
+                         Title = p.Title,
+                         Description = p.Description,
+                         ImageUrl = p.ImageUrl,
+                         Sections = p.Topic.Title
+                     })
+                     .ToList();
+
+            return View(publications);
+        }
+
+        public IActionResult AllSpots()
+        {
+            var publications = this.data
+                .Publications
+                .OrderByDescending(p => p.Id)
+                 .Where(p => p.TopicId == 4)
                  .Select(p => new PublicationListingViewModel
                  {
                      Id = p.Id,

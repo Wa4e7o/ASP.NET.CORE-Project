@@ -36,8 +36,8 @@
             {
               new Topic{ Title = "News" },
               new Topic{ Title = "Fishing Advice" },
-              new Topic{ Title = "Fishing spots" },
-              new Topic{ Title = "Fishing stories" },
+             new Topic{ Title = "Fishing spots" },
+              new Topic{ Title = "Fishing stories"},
             });
 
             data.SaveChanges();

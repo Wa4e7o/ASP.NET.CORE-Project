@@ -1,0 +1,52 @@
+﻿<!--@model IEnumerable<DetailsVie
+
+<div class="blog-single gray-bg">
+    <div class="container">
+        <div class="row align-items-start">
+            @foreach (var detail in Model)
+            {
+                <div class="col-lg-8 m-15px-tb">
+                    <article class="article">
+                        <div class="article-img">
+                            <img src="@detail.Image" title="" alt="">
+                        </div>
+                        <div class="article-title">
+                            <h6><a href="#">@detail.Category</a></h6>
+                            <h2>@detail.Title</h2>
+                        </div>
+                        <div class="article-content">
+                            <p>@detail.Description
+                        </div>
+                    </article>
+                    <div class="contact-form article-comment">
+                        <h4>Leave a Reply</h4>
+                        <form id="contact-form" method="POST">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input name="Name" id="name" placeholder="Name *" class="form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input name="Email" id="email" placeholder="Email *" class="form-control" type="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea name="message" id="message" placeholder="Your message *" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="send">
+                                        <button class="px-btn theme"><span>Submit</span> <i class="arrow"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>-->

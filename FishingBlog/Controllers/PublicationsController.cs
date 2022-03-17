@@ -2,9 +2,10 @@
 {
     using FishingBlog.Data;
     using FishingBlog.Data.Models;
+    using FishingBlog.Infrastructure;
     using FishingBlog.Models.Publications;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -16,10 +17,65 @@
            => this.data = data;
 
 
-        public IActionResult Add() => View(new AddPublicationFormModel
+        [Authorize]
+        public IActionResult Add()
         {
-            Sections = this.GetTopicCategories
-        });
+            if (!this.UserIsAdministrator())
+            {
+                return RedirectToAction(nameof(AdministratorsController.Become), "Administrators");
+            }
+
+            return View(new AddPublicationFormModel
+            {
+                Sections = this.GetTopicCategories
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Add(AddPublicationFormModel publication)
+        {
+            var adminId = this.data
+                .Administrators
+                .Where(a => a.UserId == this.User.GetId())
+                .Select(a => a.Id)
+                .FirstOrDefault();
+
+            if (adminId == 0)
+            {
+                return RedirectToAction(nameof(AdministratorsController.Become), "Administrators");
+            }
+
+
+            if (!this.data.Topics.Any(t => t.Id == publication.TopicId))
+            {
+                this.ModelState.AddModelError(nameof(publication.TopicId), "Section does not exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                publication.Sections = this.GetTopicCategories;
+
+                return View(publication);
+            }
+
+            var publicationData = new Publication
+            {
+                Title = publication.Title,
+                Description = publication.Description,
+                ImageUrl = publication.ImageUrl,
+                PublishedOn = publication.PublishedOn,
+                TopicId = publication.TopicId,
+                AdminId = adminId
+            };
+
+            this.data.Publications.Add(publicationData);
+
+            this.data.SaveChanges();
+
+            return RedirectToAction(nameof(All));
+        }
+
 
         public IActionResult All(string searchTerm)
         {
@@ -50,113 +106,18 @@
             });
         }
 
-        public IActionResult AllNewsPage()
-        {
-            var publications = this.data
-                .Publications
-                .OrderByDescending(p => p.Id)
-                 .Where(p => p.TopicId == 1)
-                 .Select(p => new PublicationListingViewModel
-                 {
-                     Id = p.Id,
-                     Title = p.Title,
-                     Description = p.Description,
-                     ImageUrl = p.ImageUrl,
-                     Sections = p.Topic.Title
-                 })
-                 .ToList();
+        public IActionResult AllNewsPage() => View(AllPublicationsQuery(1));
 
-            return View(publications);
+        public IActionResult AllAdvices() => View(AllPublicationsQuery(2));
 
-        }
+        public IActionResult AllSpots() => View(AllPublicationsQuery(3));
 
-        public IActionResult AllAdvices()
-        {
-            var publications = this.data
-                   .Publications
-                   .OrderByDescending(p => p.Id)
-                    .Where(p => p.TopicId == 2)
-                    .Select(p => new PublicationListingViewModel
-                    {
-                        Id = p.Id,
-                        Title = p.Title,
-                        Description = p.Description,
-                        ImageUrl = p.ImageUrl,
-                        Sections = p.Topic.Title
-                    })
-                    .ToList();
+        public IActionResult AllStories() => View(AllPublicationsQuery(4));
 
-            return View(publications);
-        }
-
-        public IActionResult AllStories()
-        {
-            var publications = this.data
-                    .Publications
-                    .OrderByDescending(p => p.Id)
-                     .Where(p => p.TopicId == 4)
-                     .Select(p => new PublicationListingViewModel
-                     {
-                         Id = p.Id,
-                         Title = p.Title,
-                         Description = p.Description,
-                         ImageUrl = p.ImageUrl,
-                         Sections = p.Topic.Title
-                     })
-                     .ToList();
-
-            return View(publications);
-        }
-
-        public IActionResult AllSpots()
-        {
-            var publications = this.data
-                .Publications
-                .OrderByDescending(p => p.Id)
-                 .Where(p => p.TopicId == 4)
-                 .Select(p => new PublicationListingViewModel
-                 {
-                     Id = p.Id,
-                     Title = p.Title,
-                     Description = p.Description,
-                     ImageUrl = p.ImageUrl,
-                     Sections = p.Topic.Title
-                 })
-                 .ToList();
-
-            return View(publications);
-        }
-
-        [HttpPost]
-        public IActionResult Add(AddPublicationFormModel publication)
-        {
-            if (!this.data.Topics.Any(t => t.Id == publication.TopicId))
-            {
-                this.ModelState.AddModelError(nameof(publication.TopicId), "Section does not exist");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                publication.Sections = this.GetTopicCategories;
-
-                return View(publication);
-            }
-
-            var publicationData = new Publication
-            {
-                Title = publication.Title,
-                Description = publication.Description,
-                ImageUrl = publication.ImageUrl,
-                PublishedOn = publication.PublishedOn,
-                TopicId = publication.TopicId
-            };
-
-            this.data.Publications.Add(publicationData);
-
-            this.data.SaveChanges();
-
-            return RedirectToAction(nameof(All));
-        }
+        private bool UserIsAdministrator()
+        => this.data
+                .Administrators
+                .Any(a => a.UserId == this.User.GetId());
 
         private IEnumerable<PublicationCategoryViewModel> GetTopicCategories
            => this.data
@@ -167,6 +128,26 @@
                 Title = t.Title
             })
             .ToList();
+
+        private List<PublicationListingViewModel> AllPublicationsQuery(int numCategory)
+        {
+
+            var publications = this.data
+                .Publications
+                .OrderByDescending(p => p.Id)
+                 .Where(p => p.TopicId == numCategory)
+                 .Select(p => new PublicationListingViewModel
+                 {
+                     Id = p.Id,
+                     Title = p.Title,
+                     Description = p.Description,
+                     ImageUrl = p.ImageUrl,
+                     Sections = p.Topic.Title
+                 })
+                 .ToList();
+
+            return publications;
+        }
     }
 }
 

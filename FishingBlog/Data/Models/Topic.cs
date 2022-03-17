@@ -3,12 +3,11 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants;
+    using static DataConstants.Topic;
 
     public class Topic
     {
         [Required]
-        [MaxLength(IdMaxLength)]
         public int Id { get; set; }
 
         [Required]

@@ -3,12 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static Data.DataConstants;
+
+    using static DataConstants.Publication;
 
     public class Publication
     {
+
         [Required]
-        [MaxLength(IdMaxLength)]
         public int Id { get; set; }
 
         [Required]
@@ -31,5 +32,9 @@
 
         public IEnumerable<Comment> Comments { get; set; } = new List<Comment>();
 
+        public int AdminId { get; init; }
+
+        public Administrator Administrator { get; init; }
+       
     }
 }

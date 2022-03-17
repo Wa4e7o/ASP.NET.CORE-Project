@@ -3,12 +3,11 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants;
+    using static DataConstants.Comment;
 
     public class Comment
     {
         [Required]
-        [MaxLength(IdMaxLength)]
         public int Id { get; set; }
 
         [Required]
@@ -21,7 +20,7 @@
         public string CommentText { get; set; }
 
         [Required]
-        public string CreatedOn { get; set; } 
+        public string CreatedOn { get; set; }
 
         public int PublicationId { get; set; }
 

@@ -30,3 +30,8 @@
         </div>
     }
 </div>
+
+@if (!Model.Publications.Any())
+{
+    <h2 class="text-center">No publications in Blog !</h2>
+}

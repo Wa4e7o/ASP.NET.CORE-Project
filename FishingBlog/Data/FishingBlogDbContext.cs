@@ -1,6 +1,7 @@
 ﻿namespace FishingBlog.Data
 {
     using FishingBlog.Data.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,8 @@
 
         public DbSet<News> Newses { get; init; } 
 
+        public DbSet<Administrator> Administrators { get; init; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,6 +51,20 @@
                .WithMany(p => p.Products)
                .HasForeignKey(p => p.CartId)
                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Publication>()
+                .HasOne(p => p.Administrator)
+                .WithMany(a => a.Publications)
+                .HasForeignKey(p => p.AdminId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Administrator>()
+                .HasOne<IdentityUser>()
+                .WithOne()
+                .HasForeignKey<Administrator>(a => a.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

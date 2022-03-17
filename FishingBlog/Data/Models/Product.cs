@@ -3,12 +3,11 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants;
+    using static DataConstants.Product;
 
     public class Product
     {
         [Required]
-        [MaxLength(IdMaxLength)]
         public int Id { get; set; }
 
         [Required]
@@ -16,7 +15,7 @@
         public string Brand { get; set; }
 
         [Required]
-        [MaxLength(BrandMaxLength)]
+        [MaxLength(ModelMaxLength)]
         public string Model { get; set; }
 
         [Required]
